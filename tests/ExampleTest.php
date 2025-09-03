@@ -1,5 +1,11 @@
 <?php
 
+use function Pest\Laravel\artisan;
+
 it('can test', function () {
-    expect(true)->toBeTrue();
+    artisan(\SteveCreekmore\LaravelExample\Commands\LaravelExampleCommand::class)
+        ->assertExitCode(\Illuminate\Console\Command::SUCCESS);
+
+    // dd(config('database'));
+    // expect(true)->toBeTrue();
 });

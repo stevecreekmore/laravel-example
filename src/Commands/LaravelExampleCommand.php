@@ -12,6 +12,7 @@ class LaravelExampleCommand extends Command
 
     public function handle(): int
     {
+        // dd('calling command');
         $this->comment('All done');
 
         return self::SUCCESS;
