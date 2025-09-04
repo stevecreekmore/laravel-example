@@ -32,6 +32,18 @@ jobs:
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
+    services: mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: Seth108
+          MYSQL_DATABASE: laravel_example
+        ports:
+          - 3306:3306
+        options:
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -58,3 +70,9 @@ jobs:
 
       - name: Execute tests
         run: vendor/bin/pest --ci
+        env:
+          DB_CONNECTION: mysql
+          DB_DATABASE: laravel_example
+          DB_USERNAME: root
+          DB_PASSWORD: Seth108
+          DB_PORT: ${{ job.services.mysql.ports[3306] }}
